@@ -20,5 +20,8 @@ const adminValid = {
     email: yup.string().email().required(),
     password: yup.string().required("Pasword can't be blank"),
   }),
+  refreshTokenValidation: yup.object({
+    rf_token: yup.string().required(),
+  }),
 };
 module.exports = adminValid;

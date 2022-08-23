@@ -58,12 +58,7 @@ const adminController = {
       const accessToken = await createAccessToken(userID);
       const refreshToken = await createRefreshToken(userID);
 
-      res.cookie("trading-ref-token", refreshToken, {
-        httpOnly: true,
-        secure: false,
-        maxAge: 30 * 24 * 60 * 60 * 1000, // 30d
-      });
-      return res.status(200).json({ accessToken });
+      return res.status(200).json({ accessToken, refreshToken });
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
@@ -80,22 +75,16 @@ const adminController = {
 
   refreshtoken: async (req, res) => {
     try {
-      const rf_token = req.cookies.refToken;
+      const { rf_token } = req.body;
       if (!rf_token) {
         return res.status(400).json({ message: "Unauthorized User" });
       }
-
       let userID = await verifyRefreshToken(rf_token);
-
       const accessToken = await createAccessToken(userID);
-      const refreshToken = await createRefreshToken(userID);
-
-      res.cookie("refToken", refreshToken, {
-        httpOnly: true,
-        secure: false,
-        maxAge: 30 * 24 * 60 * 60 * 1000, // 30d
-      });
-      return res.status(200).json({ accessToken });
+      const newRefreshToken = await createRefreshToken(userID);
+      return res
+        .status(200)
+        .json({ accessToken: accessToken, refreshToken: newRefreshToken });
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
@@ -104,7 +93,6 @@ const adminController = {
   changePassword: async (req, res) => {
     try {
       const newPassword = await bcrypt.hash(req.body.password, 10);
-      const { password } = req.body;
       let data = await adminModel.findByIdAndUpdate(
         { _id: req.params.id },
         {

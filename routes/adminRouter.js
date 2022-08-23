@@ -21,7 +21,9 @@ router
 
 router.route("/getuser").get(adminTokenAuth, authAdmin, adminCtrl.getuser);
 
-router.route("/refresh-token").get(adminCtrl.refreshtoken);
+router
+  .route("/refresh-token")
+  .post(validate(adminValid.refreshTokenValidation), adminCtrl.refreshtoken);
 
 // router.route("/register").post(adminCtrl.register);
 
