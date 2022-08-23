@@ -1,9 +1,9 @@
 const Redis = require("redis");
-// const Client = Redis.createClient({
-//   url: process.env.REDIS_URL ,
-// });
+const Client = Redis.createClient({
+  url: process.env.REDIS_URL,
+});
 
-const Client = Redis.createClient();
+// const Client = Redis.createClient();
 
 const serverConnect = async () => {
   if (!Client.isOpen) {
