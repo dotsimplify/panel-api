@@ -113,7 +113,7 @@ const adminController = {
 
   getuser: async (req, res) => {
     try {
-      const user = await adminModel.findById(req.user);
+      const user = await adminModel.findById(req.user.id);
       if (!user) {
         return res.status(400).json({ message: "Unauthorised user access" });
       }
