@@ -6,7 +6,7 @@ const {
   createRefreshToken,
   verifyRefreshToken,
 } = require("../helpers/jwtHelpers");
-const { getALLKeys } = require("../helpers/redisFunctions");
+const { getALLKeys, deleteOneKey } = require("../helpers/redisFunctions");
 
 const adminController = {
   // to Register new admin
@@ -67,7 +67,11 @@ const adminController = {
 
   logout: async (req, res) => {
     try {
-      res.clearCookie("trading-ref-token");
+      const user = await adminModel.findById(req.user.id);
+      if (!user) {
+        return res.status(400).json({ message: "Unauthorised user access" });
+      }
+      await deleteOneKey(user.id);
       return res.json({ message: "logged out" });
     } catch (error) {
       return res.status(500).json({ message: error.message });
