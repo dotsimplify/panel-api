@@ -6,6 +6,7 @@ const {
   createRefreshToken,
   verifyRefreshToken,
 } = require("../helpers/jwtHelpers");
+const { getALLKeys } = require("../helpers/redisFunctions");
 
 const adminController = {
   // to Register new admin
@@ -57,7 +58,7 @@ const adminController = {
       let userID = user.id;
       const accessToken = await createAccessToken(userID);
       const refreshToken = await createRefreshToken(userID);
-
+      console.log(await getALLKeys());
       return res.status(200).json({ accessToken, refreshToken });
     } catch (error) {
       return res.status(500).json({ message: error.message });
