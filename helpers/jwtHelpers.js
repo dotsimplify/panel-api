@@ -11,7 +11,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       const payload = { id: userId };
       const options = {
-        expiresIn: "1h",
+        expiresIn: "15s",
       };
       JWT.sign(
         payload,
