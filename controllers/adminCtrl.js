@@ -230,9 +230,9 @@ const adminController = {
       if (requestingUser.type !== "M") {
         return res.status(403).json({ message: "forbidden" });
       }
-      await accountModel.findByIdAndUpdate(
+      await accountModel.findOneAndUpdate(
         {
-          _id: req.params.id,
+          username: req.params.username,
         },
         { balance, usedMargin, profitOrLossMin, profitOrLossMax }
       );

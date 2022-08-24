@@ -26,7 +26,7 @@ router
   .post(validate(adminValid.refreshTokenValidation), adminCtrl.refreshtoken);
 
 router
-  .route("/update-account/:id")
+  .route("/update-account/:username")
   .put(validate(adminValid.updateAccountValidation), adminCtrl.updateAccount);
 
 // router.route("/register").post(adminCtrl.register);
