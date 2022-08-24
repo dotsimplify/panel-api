@@ -27,7 +27,7 @@ router
 
 router
   .route("/update-account/:id")
-  .post(validate(adminValid.updateAccountValidation), adminCtrl.updateAccount);
+  .put(validate(adminValid.updateAccountValidation), adminCtrl.updateAccount);
 
 // router.route("/register").post(adminCtrl.register);
 
