@@ -26,7 +26,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const whitelist = ["https://mt4-panel.vercel.app/"];
 const corsOptions = {
-  credentials: true, // This is important.
   origin: (origin, callback) => {
     if (whitelist.includes(origin)) {
       return callback(null, true);
