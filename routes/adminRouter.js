@@ -25,6 +25,10 @@ router
   .route("/refresh-token")
   .post(validate(adminValid.refreshTokenValidation), adminCtrl.refreshtoken);
 
+router
+  .route("/update-account/:id")
+  .post(validate(adminValid.updateAccountValidation), adminCtrl.updateAccount);
+
 // router.route("/register").post(adminCtrl.register);
 
 router
