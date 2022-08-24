@@ -24,12 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 //   next();
 // });
 
-const whitelist = [
-  "http://localhost:5000/",
-  "127.0.0.1:3000",
-  "http://localhost:3000",
-  "http://localhost:3000/",
-];
+const whitelist = ["https://mt4-panel.vercel.app"];
 const corsOptions = {
   credentials: true, // This is important.
   origin: (origin, callback) => {
@@ -41,7 +36,7 @@ const corsOptions = {
 };
 
 // app.use(cors(corsOptions));
-app.use(cors());
+app.use(cors(corsOptions));
 
 // cookie parser
 app.use(cookieParser());
