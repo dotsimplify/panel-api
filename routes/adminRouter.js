@@ -35,4 +35,8 @@ router
   .route("/change-password/:id")
   .put(adminTokenAuth, authAdmin, adminCtrl.changePassword);
 
+router
+  .route("/get-account-detail/:username")
+  .get(adminTokenAuth, authAdmin, adminCtrl.singleAccount);
+
 module.exports = router;

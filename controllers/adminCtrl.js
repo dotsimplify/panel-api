@@ -253,7 +253,9 @@ const adminController = {
       if (requestingUser.type !== "M") {
         return res.status(403).json({ message: "forbidden" });
       }
-      const singleAcc = await accountModel.findById(req.params.id);
+      const singleAcc = await accountModel.findOne({
+        username: req.params.username,
+      });
       if (singleAcc == null) {
         return res
           .status(400)
