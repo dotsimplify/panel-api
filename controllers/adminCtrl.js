@@ -132,40 +132,51 @@ const adminController = {
     try {
       let requestingUser = await adminModel.findById(req.user.id);
 
+      function getRandomNumberBetween(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+      }
       if (!requestingUser) {
         return res.status(404).json({ message: "user not exist" });
       }
 
-      let account = await accountModel.findOne({
+      let allAccounts = await accountModel.find({
         username: requestingUser.username,
       });
-
-      if (!account) {
-        return res.status(404).json({ message: "user not exist" });
+      if (!allAccounts.length) {
+        return res.status(404).json({ message: "Account does not exist" });
       }
 
-      const { balance, usedMargin, profitOrLossMin, profitOrLossMax } = account;
+      let arr = [];
 
-      function getRandomNumberBetween(min, max) {
-        return Math.floor(Math.random() * (max - min + 1) + min);
+      for (const key in allAccounts) {
+        const {
+          brokerName,
+          balance,
+          usedMargin,
+          profitOrLossMin,
+          profitOrLossMax,
+        } = allAccounts[key];
+        let profitLossToShow = getRandomNumberBetween(
+          profitOrLossMin,
+          profitOrLossMax
+        );
+        function getBalance() {
+          let equity = balance - usedMargin + profitLossToShow;
+
+          return equity;
+        }
+        let equity = getBalance();
+
+        arr.push({
+          brokerName,
+          balance,
+          equity,
+          margin: usedMargin,
+          profitOrLoss: profitLossToShow,
+        });
       }
-      let profitLossToShow = getRandomNumberBetween(
-        profitOrLossMin,
-        profitOrLossMax
-      );
-      function getBalance() {
-        let equity = balance - usedMargin + profitLossToShow;
 
-        return equity;
-      }
-      let equity = getBalance();
-
-      return res.status(200).json({
-        balance,
-        equity,
-        margin: usedMargin,
-        profitOrLoss: profitLossToShow,
-      });
+      return res.status(200).json({ accounts: arr });
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }

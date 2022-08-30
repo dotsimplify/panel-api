@@ -57,7 +57,7 @@ router
   .put(adminTokenAuth, authAdmin, adminCtrl.changePassword);
 
 router
-  .route("/get-account-detail/:username")
+  .route("/get-account-detail/:id")
   .get(adminTokenAuth, authAdmin, adminCtrl.singleAccount);
 
 module.exports = router;
