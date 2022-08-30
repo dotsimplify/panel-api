@@ -188,6 +188,27 @@ const adminController = {
       return res.status(500).json({ message: error.message });
     }
   },
+  getAllUsers: async (req, res) => {
+    try {
+      let requestingUser = await adminModel.findById(req.user.id);
+
+      if (!requestingUser) {
+        return res.status(404).json({ message: "user not exist" });
+      }
+
+      if (requestingUser.type !== "M") {
+        return res.status(403).json({ message: "forbidden" });
+      }
+      const allUsers = await adminModel.find();
+
+      if (!allUsers.length) {
+        return res.status(200).json({ users: [] });
+      }
+      return res.status(200).json({ users: allUsers });
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  },
 
   createAccount: async (req, res) => {
     try {

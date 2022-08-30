@@ -24,6 +24,10 @@ router
   .post(adminTokenAuth, authAdmin, adminCtrl.createAccount);
 
 router
+  .route("/all-users-list")
+  .post(adminTokenAuth, authAdmin, adminCtrl.getAllUsers);
+
+router
   .route("/delete-account/:id")
   .get(adminTokenAuth, authAdmin, adminCtrl.deleteAccount);
 
