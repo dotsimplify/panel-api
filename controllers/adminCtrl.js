@@ -32,6 +32,7 @@ const adminController = {
         username,
         balance: 0,
         usedMargin: 0,
+        brokerName: "Equity Broker",
         profitOrLossMin: 0,
         profitOrLossMax: 0,
       });
@@ -58,7 +59,6 @@ const adminController = {
       let userID = user.id;
       const accessToken = await createAccessToken(userID);
       const refreshToken = await createRefreshToken(userID);
-      console.log(await getALLKeys());
       return res.status(200).json({ accessToken, refreshToken });
     } catch (error) {
       return res.status(500).json({ message: error.message });
@@ -189,6 +189,35 @@ const adminController = {
     }
   },
 
+  createAccount: async (req, res) => {
+    try {
+      const { username } = req.body;
+      let requestingUser = await adminModel.findById(req.user.id);
+
+      if (!requestingUser) {
+        return res.status(404).json({ message: "user not exist" });
+      }
+
+      if (requestingUser.type !== "M") {
+        return res.status(403).json({ message: "forbidden" });
+      }
+      let account = new accountModel({
+        username,
+        balance: 0,
+        usedMargin: 0,
+        brokerName: "Equity Broker",
+        profitOrLossMin: 0,
+        profitOrLossMax: 0,
+      });
+      await account.save();
+      return res.status(200).json({
+        message: `New Account Added to ${username}`,
+      });
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  },
+
   deleteAccount: async (req, res) => {
     try {
       let requestingUser = await adminModel.findById(req.user.id);
@@ -201,9 +230,7 @@ const adminController = {
         return res.status(403).json({ message: "forbidden" });
       }
 
-      let foundAccount = await accountModel.findOne({
-        username: req.params.id,
-      });
+      let foundAccount = await accountModel.findById(req.params.id);
 
       if (!foundAccount) {
         return res.status(404).json({ message: "Account doesn't exist" });
@@ -219,8 +246,13 @@ const adminController = {
 
   updateAccount: async (req, res) => {
     try {
-      const { balance, usedMargin, profitOrLossMin, profitOrLossMax } =
-        req.body;
+      const {
+        balance,
+        usedMargin,
+        profitOrLossMin,
+        brokerName,
+        profitOrLossMax,
+      } = req.body;
       let requestingUser = await adminModel.findById(req.user.id);
 
       if (!requestingUser) {
@@ -234,7 +266,7 @@ const adminController = {
         {
           username: req.params.username,
         },
-        { balance, usedMargin, profitOrLossMin, profitOrLossMax }
+        { balance, usedMargin, brokerName, profitOrLossMin, profitOrLossMax }
       );
 
       return res.status(200).json({ message: "Account updated successfully" });

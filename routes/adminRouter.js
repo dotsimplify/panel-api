@@ -19,6 +19,14 @@ router
   .route("/live-account-value")
   .get(adminTokenAuth, authAdmin, adminCtrl.accountValueToday);
 
+router
+  .route("/create-new-account")
+  .get(adminTokenAuth, authAdmin, adminCtrl.createAccount);
+
+router
+  .route("/delete-account/:id")
+  .get(adminTokenAuth, authAdmin, adminCtrl.deleteAccount);
+
 router.route("/getuser").get(adminTokenAuth, authAdmin, adminCtrl.getuser);
 
 router

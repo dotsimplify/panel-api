@@ -10,6 +10,10 @@ const accountModel = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    brokerName: {
+      type: String,
+      required: true,
+    },
     usedMargin: {
       type: Number,
       required: true,
