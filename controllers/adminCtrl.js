@@ -307,7 +307,7 @@ const adminController = {
         return res.status(403).json({ message: "forbidden" });
       }
       const singleAcc = await accountModel.findOne({
-        username: req.params.username,
+        _id: req.params.id,
       });
       if (singleAcc == null) {
         return res
