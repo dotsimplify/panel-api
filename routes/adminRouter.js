@@ -21,7 +21,7 @@ router
 
 router
   .route("/create-new-account")
-  .get(adminTokenAuth, authAdmin, adminCtrl.createAccount);
+  .post(adminTokenAuth, authAdmin, adminCtrl.createAccount);
 
 router
   .route("/delete-account/:id")
