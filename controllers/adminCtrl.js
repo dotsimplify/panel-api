@@ -285,7 +285,7 @@ const adminController = {
       }
       await accountModel.findOneAndUpdate(
         {
-          username: req.params.username,
+          _id: req.params.id,
         },
         { balance, usedMargin, brokerName, profitOrLossMin, profitOrLossMax }
       );

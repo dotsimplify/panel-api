@@ -25,7 +25,7 @@ router
 
 router
   .route("/all-users-list")
-  .post(adminTokenAuth, authAdmin, adminCtrl.getAllUsers);
+  .get(adminTokenAuth, authAdmin, adminCtrl.getAllUsers);
 
 router
   .route("/delete-account/:id")
@@ -38,7 +38,7 @@ router
   .post(validate(adminValid.refreshTokenValidation), adminCtrl.refreshtoken);
 
 router
-  .route("/update-account/:username")
+  .route("/update-account/:id")
   .put(
     adminTokenAuth,
     authAdmin,
