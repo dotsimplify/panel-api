@@ -26,6 +26,10 @@ const accountModel = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    oiBal: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

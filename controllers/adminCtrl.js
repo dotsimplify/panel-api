@@ -155,6 +155,7 @@ const adminController = {
           usedMargin,
           profitOrLossMin,
           profitOrLossMax,
+          oiBal,
         } = allAccounts[key];
         let profitLossToShow = getRandomNumberBetween(
           profitOrLossMin,
@@ -171,6 +172,7 @@ const adminController = {
           brokerName,
           balance,
           equity,
+          oiBal,
           margin: usedMargin,
           profitOrLoss: profitLossToShow,
         });
@@ -284,6 +286,7 @@ const adminController = {
         profitOrLossMin,
         brokerName,
         profitOrLossMax,
+        oiBal,
       } = req.body;
       let requestingUser = await adminModel.findById(req.user.id);
 
@@ -298,7 +301,14 @@ const adminController = {
         {
           _id: req.params.id,
         },
-        { balance, usedMargin, brokerName, profitOrLossMin, profitOrLossMax }
+        {
+          balance,
+          usedMargin,
+          brokerName,
+          profitOrLossMin,
+          profitOrLossMax,
+          oiBal,
+        }
       );
 
       return res.status(200).json({ message: "Account updated successfully" });

@@ -25,6 +25,7 @@ const adminValid = {
     usedMargin: yup.number().required("Margin is required"),
     profitOrLossMin: yup.number().required("Minimum Profit / Loss is required"),
     profitOrLossMax: yup.number().required("Maximum Profit / Loss is required"),
+    oiBal: yup.number().required("Please set Weekend Balance"),
   }),
   refreshTokenValidation: yup.object({
     rf_token: yup.string().required(),
