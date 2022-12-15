@@ -61,7 +61,6 @@ app.get("/", (req, res) => {
 });
 
 //Initiate router
-app.use("/api/v1", require("./routes/upload"));
 app.use("/admin", require("./routes/adminRouter"));
 
 app.use((req, res, next) => {

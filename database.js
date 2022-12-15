@@ -4,10 +4,14 @@ const mongoose = require("mongoose");
 // mongoose connection starts here
 // ||      `mongodb://localhost:27017/${process.env.DATABASE_NAME}`
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    process.env.MONGODB_URI ||
+      `mongodb://localhost:27017/${process.env.DATABASE_NAME}`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     console.log("Mongoose connected to db");
   })

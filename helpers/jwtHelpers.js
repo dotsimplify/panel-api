@@ -15,7 +15,7 @@ module.exports = {
       };
       JWT.sign(
         payload,
-        process.env.ADMIN_ACCESS_TOKEN,
+        `${process.env.ADMIN_ACCESS_TOKEN}`,
         options,
         (err, token) => {
           if (err) {
@@ -37,7 +37,7 @@ module.exports = {
       };
       JWT.sign(
         payload,
-        process.env.ADMIN_REFRESH_TOKEN,
+        `${process.env.ADMIN_REFRESH_TOKEN}`,
         options,
         async (err, token) => {
           if (err) {
@@ -56,7 +56,7 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       JWT.verify(
         refreshToken,
-        process.env.ADMIN_REFRESH_TOKEN,
+        `${process.env.ADMIN_REFRESH_TOKEN}`,
         async (err, payload) => {
           if (err) return reject(createError.Unauthorized());
           const userId = payload.aud;

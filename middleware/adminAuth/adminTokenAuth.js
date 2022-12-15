@@ -6,7 +6,7 @@ const adminTokenAuth = (req, res, next) => {
     if (!token) {
       return res.status(400).json({ message: "Invalid Credentials !!" });
     }
-    jwt.verify(token, process.env.ADMIN_ACCESS_TOKEN, (err, user) => {
+    jwt.verify(token, `${process.env.ADMIN_ACCESS_TOKEN}`, (err, user) => {
       if (err) {
         if (err.name === "JsonWebTokenError") {
           return res
